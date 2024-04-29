@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.16)
+if(COMMAND cmake_policy)
+    cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
+
+project(eden)
+file(GLOB eden_SRC "src/*")
+add_executable(eden ${eden_SRC})
+target_compile_options(eden PRIVATE)
+target_link_libraries(eden m allegro allegro_font allegro_ttf allegro_primitives allegro_dialog)
