@@ -2,20 +2,20 @@
 #include <vector>
 #include <string>
 #include <dlfcn.h>
-#include "module.h"
+#include "plugin.h"
 
-class ModuleHandle {
+class PluginHandle {
   private:
-    Module* module;
+    Plugin* plugin;
     void* dlhandle;
     std::string name;
   public:
-    ModuleHandle() {
-      module = NULL;
+    PluginHandle() {
+      plugin = NULL;
       dlhandle = NULL;
     }
-    ~ModuleHandle() {
-      delete module;
+    ~PluginHandle() {
+      delete plugin;
       dlclose(dlhandle);
     }
     bool Load(std::string name) {
@@ -25,8 +25,8 @@ class ModuleHandle {
         std::cout<<dlerror()<<std::endl;
         return false;
       }
-      Module* (*c)();
-      c = (Module*(*)())dlsym(dlhandle, "create");
+      Plugin* (*c)();
+      c = (Plugin*(*)())dlsym(dlhandle, "create");
       char* error = dlerror();
       if(error != NULL) {
         std::cout<<error<<std::endl;
@@ -34,25 +34,25 @@ class ModuleHandle {
         dlhandle = NULL;
         return false;
       }
-      module = (*c)();
-      module->run();
+      plugin = (*c)();
+      plugin->run();
       return true;
     }
 };
 
-class ModuleAPI {
+class PluginAPI {
   private:
-    std::vector<ModuleHandle*> modulehandles;
+    std::vector<PluginHandle*> pluginhandles;
   public:
-    ~ModuleAPI() {
+    ~PluginAPI() {
     }
 
 };
 
 int main() {
   std::cout<<"Hello"<<std::endl;
-  ModuleHandle* modulehandle = new ModuleHandle;
-  modulehandle->Load("test");
-  delete modulehandle;
+  PluginHandle* pluginhandle = new PluginHandle;
+  pluginhandle->Load("test");
+  delete pluginhandle;
   return 0;
 }

@@ -1,6 +1,6 @@
-class Module {
+class Plugin {
   public:
-    virtual ~Module() {}
+    virtual ~Plugin() {}
     virtual void run()=0;
 };
 
