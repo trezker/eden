@@ -54,22 +54,5 @@ int main() {
   ModuleHandle* modulehandle = new ModuleHandle;
   modulehandle->Load("test");
   delete modulehandle;
-/*  
-  void* h = dlopen("./test.so", RTLD_NOW);
-  if(!h) {
-    std::cout<<dlerror()<<std::endl;
-    return 0;
-  }
-  Module* (*c)();
-  c = (Module*(*)())dlsym(h, "create");
-  char* error = dlerror();
-  if(error != NULL) {
-    std::cout<<error<<std::endl;
-  }
-  Module* m = (*c)();
-  m->run();
-  delete m;
-  dlclose(h);
-*/
   return 0;
 }
